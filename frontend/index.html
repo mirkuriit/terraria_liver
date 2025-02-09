@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кнопки управления</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            gap: 10px;
+        }
+
+        .button {
+            padding: 15px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .button.full_live {
+            background-color: #28a745;
+        }
+
+        .button.death {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <button class="button full_live" data-number="5">full_live</button>
+        <button class="button death" data-number="0">death</button>
+        <button class="button" data-number="1">1</button>
+        <button class="button" data-number="2">2</button>
+        <button class="button" data-number="3">3</button>
+        <button class="button" data-number="4">4</button>
+    </div>
+
+    <script>
+        // Получаем все кнопки
+        const buttons = document.querySelectorAll('.button');
+
+        // Добавляем обработчик клика для каждой кнопки
+        buttons.forEach(button => {
+            button.addEventListener('click', function () {
+                const number = this.dataset.number; // Получаем номер из data-атрибута
+                const url = `http://192.168.195.173/live/${number}`; // Формируем URL
+
+                // Отправляем GET-запрос
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Ошибка сети');
+                        }
+                        console.log(`Запрос отправлен: ${url}`);
+                    })
+                    .catch(error => {
+                        console.error('Ошибка:', error);
+                    });
+            });
+        });
+    </script>
+</body>
+</html>
