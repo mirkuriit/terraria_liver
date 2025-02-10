@@ -10,7 +10,6 @@ import os
 model = YOLO(os.path.join("yolo_client", "best.pt"))
 
 with mss.mss() as sct:
-    # Part of the screen to capturet
     monitor = {"top": 0, "left": 1580, "width": 340, "height": 100}
     imgs = []
     last_time = time.time()
@@ -38,8 +37,13 @@ with mss.mss() as sct:
             predicted = 0
         elif predicted == "full_live":
             predicted = 5
-
-        requests.get("")
+        print(predicted)
+        try:
+            response = requests.get(f"http://192.168.195.173/live/{predicted}", timeout=3)
+            print("oa")
+        except:
+            print("error nahoi")
+        time.sleep(1)
 
        
 
